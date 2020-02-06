@@ -10,7 +10,38 @@ uint32_t Ch(uint32_t x, uint32_t y, uint32_t z){
 }
 
 uint32_t Maj(uint32_t x, uint32_t y, uint32_t z){
+  // section 4.1.2
   return (x &y) ^ (x &z) ^ (y & z);
+}
+
+uint32_t SHR(uint32_t x, int n){
+  // section 3.2
+  return x >> n;
+}
+
+uint32_t ROTR(uint32_t x, int n){
+  // section 3.2
+  return (x >> n) | (x << (32 - n));
+}
+
+uint32_t Sig0(uint32_t x){
+	// Section  4.1.2 
+	return ROTR(x, 2) ^ ROTR(x, 13) ^ ROTR(x, 22);
+}
+
+uint32_t Sig1(uint32_t x){
+	// Section  4.1.2 
+	return ROTR(x, 6) ^ ROTR(x, 11) ^ ROTR(x, 25);
+}
+
+uint32_t sig2(uint32_t x){
+	// Section  4.1.2
+	return ROTR(x, 4) ^ ROTR(x, 18) ^ SHR(x, 3);
+}
+
+uint32_t sig3(uint32_t x){
+	// Section  4.1.2 
+	return ROTR(x, 17) ^ ROTR(x, 19) ^ SHR(x, 10);
 }
 
 int main(int argc, char *argv[]){
@@ -26,6 +57,15 @@ int main(int argc, char *argv[]){
   printf("Ch(x,y,z)  = %08x\n", Ch(x,y,z));
 
   printf("Maj(x,y,z) = %08x\n", Maj(x,y,z));
+
+  printf("SHR(x,4)   = %08x\n", SHR(x,4));
+  printf("ROTR(x,4)  = %08x\n", ROTR(x,4));
+
+  printf("Sig0(x)    = %08x\n", Sig0(x));
+	printf("Sig1(x)    = %08x\n", Sig1(x));
+	printf("sig2(x)    = %08x\n", sig2(x));
+	printf("sig3(x)    = %08x\n", sig3(x));
+
 
   return 0;
   
