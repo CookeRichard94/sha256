@@ -1,3 +1,3 @@
 # sha256
 
-Richard Cooke
+by Richard Cooke
